@@ -10,7 +10,7 @@
 #define TIMERS_H_
 
 #include "t_typedef.h"
-
+#include "timer_LCFG.h"
 
 
 /************************************************************************/
@@ -57,22 +57,33 @@
 
 // for timer 0
 typedef enum {
-	T0_NORMAL_MODE=0x00,T0_PWM_MODE=0x40,T0_COMP_MODE=0x08,T0_FastPWM_MODE=0x48
+	T0_NORMAL_MODE=0x00,
+	T0_PWM_MODE=0x40,
+	T0_COMP_MODE=0x08,
+	T0_FastPWM_MODE=0x48
 }T0_MODE;
 
 typedef enum {
-	T0_OC0_DIS=0x00,T0_OC0_TOGGLE=0x10,T0_OC0_CLEAR=0x20,T0_OC0_SET=0x30,
+	T0_OC0_DIS=0x00,
+	T0_OC0_TOGGLE=0x10,
+	T0_OC0_CLEAR=0x20,
+	T0_OC0_SET=0x30,
 }T0_COM;
 
 typedef enum {
-	T0_NO_CLOCK=0,T0_PRESCALER_1=0x01,T0_PRESCALER_8=0x02,T0_PRESCALER_64=0x03,T0_PRESCALER_256=0x04,T0_PRESCALER_1024=0x00000101,
+	T0_NO_CLOCK=0,
+	T0_PRESCALER_1=0x01,
+	T0_PRESCALER_8=0x02,
+	T0_PRESCALER_64=0x03,
+	T0_PRESCALER_256=0x04,
+	T0_PRESCALER_1024=0x05,
 }T0_PRESCALER;
 
 typedef enum {
-	T0_POLLING=0x00,T0_INTERRUPT_NORMAL=0x01,T0_INTERRUPT_CMP=0x02
+	T0_POLLING=0x00,
+	T0_INTERRUPT_NORMAL=0x01,
+	T0_INTERRUPT_CMP=0x02
 }T0_INTERRUPT;
-
-
 
 
 
@@ -139,11 +150,20 @@ typedef enum {
 }T2_COM;
 
 typedef enum {
-	T2_NO_CLOCK=0x00,T2_PRESCALER_1=0x01,T2_PRESCALER_8=0x02,T2_PRESCALER_32=0x03,T2_PRESCALER_64=0x04,T2_PRESCALER_128=0x05,T2_PRESCALER_256=0x06,T2_PRESCALER_1024=0x07
+	T2_NO_CLOCK=0x00,
+	T2_PRESCALER_1=0x01,
+	T2_PRESCALER_8=0x02,
+	T2_PRESCALER_32=0x03,
+	T2_PRESCALER_64=0x04,
+	T2_PRESCALER_128=0x05,
+	T2_PRESCALER_256=0x06,
+	T2_PRESCALER_1024=0x07
 }T2_PRESCALER;
 
 typedef enum {
-	T2_POLLING=0x00,T2_INTERRUPT_NORMAL=0x40,T2_INTERRUPT_CMP=0x80
+	T2_POLLING = 0x00,
+	T2_INTERRUPT_NORMAL = 0x40,
+	T2_INTERRUPT_CMP = 0x80
 }T2_INTERRUPT;
 
 
@@ -151,15 +171,27 @@ typedef enum {
 /*                   Timers' Functions' prototypes                      */
 /************************************************************************/
 
-/*===========================Timer0 Control===============================*/
-void Av_timer0Init(T0_MODE mode,T0_COM OC0,T0_PRESCALER prescal, uint8 initialValue, uint8 outputCompare, T0_INTERRUPT interruptMask);
-void Av_timer0Set(uint8 value);
-uint8 Av_timer0Read(void);
-void Av_timer0Start(void);
-void Av_timer0Stop(void);
-void Av_timer0Delay_ms(uint16 delay);
-void Av_timer0Delay_ns(uint32 delay);
-void Av_timer0SwPWM(uint8 dutyCycle,uint64 freq);
+
+/************************************************************************/
+/*                   Timers' Functions' prototypes                      */
+/************************************************************************/
+uint8  Timer_Init(Timer_CFG_S* cfg_s);
+uint8  Timer_Start(uint8 ch_no);
+uint8  Timer_Stop(uint8 ch_no);
+uint8  Timer_set_counter(uint8 ch_no,uint16 count);
+uint8  Timer_getStatus(uint8 ch_no);
+uint32 Timer_Read(uint8 ch_no);
+
+
+///*===========================Timer0 Control===============================*/
+//void Av_timer0Init(T0_MODE mode,T0_COM OC0,T0_PRESCALER prescal, uint8 initialValue, uint8 outputCompare, T0_INTERRUPT interruptMask);
+//void Av_timer0Set(uint8 value);
+//uint8 Av_timer0Read(void);
+//void Av_timer0Start(void);
+//void Av_timer0Stop(void);
+//void Av_timer0Delay_ms(uint16 delay);
+//void Av_timer0Delay_ns(uint32 delay);
+//void Av_timer0SwPWM(uint8 dutyCycle,uint64 freq);
 
 /*===========================Timer1 Control===============================*/
 void Av_timer1Init(T1_MODE mode,T1_COM OC,T1_PRESCALER prescal, uint16 initialValue, uint8 outputCompareLow, uint8 outputCompareHigh,uint16 inputCapture, T1_INTERRUPT interruptMask);
@@ -184,10 +216,6 @@ void Av_timer2Stop(void);
 void Av_timer2Delay_ms(uint16 delay);
 void Av_timer2Delay_ns(uint32 delay);
 void Av_timer2SwPWM(uint8 dutyCycle,uint64 freq);
-
-
-
-
 
 void AVE_timer1PWM(uint8 dutycycle , uint16 freq );
 

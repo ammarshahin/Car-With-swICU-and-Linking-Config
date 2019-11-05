@@ -10,7 +10,7 @@
 #include "gpio.h"
 #include "timers.h"
 #include "ICU.h"
-
+#include <util/delay.h>
 
 volatile uint8 flag = 0,numOfOverflows = 0;
 volatile uint64 raising_time_ns = 0;
@@ -57,7 +57,6 @@ void Av_ICU_Init()
 void Av_UltraSonicTrigger()
 {
 	Av_gpioPinWrite(myPORTA,BIT0,HIGH);
-	Av_timer0Delay_ns(15000);
-	Av_gpioPinWrite(myPORTA,BIT0,LOW);
-	
+	_delay_us(15);
+	Av_gpioPinWrite(myPORTA,BIT0,LOW);	
 }

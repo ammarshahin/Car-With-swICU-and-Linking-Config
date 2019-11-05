@@ -186,7 +186,7 @@ void Av_gpioPinWrite(uint8 port, uint8 pins, uint8 value)
 {
 	switch(value)
 	{
-		case TRUE:
+		case HIGH:
 			switch(port)
 			{
 					case myPORTA :
@@ -204,7 +204,7 @@ void Av_gpioPinWrite(uint8 port, uint8 pins, uint8 value)
 		}
 		break;
 		
-		case FALSE : 
+		case LOW : 
 		switch(port)
 		{
 			case myPORTA :
